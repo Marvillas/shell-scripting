@@ -11,11 +11,13 @@ fi
 
 # Get the username (login).
 read -p 'Enter the username: ' USER_NAME
+
 # Check if the username already exists.
 if id ${USER_NAME} >/dev/null 2>&1; then
  echo "The username $username already exists."
  exit 1
 fi
+
 # Get the real name (contents for the description field).
 read -p 'The real names of the user that account is for: ' COMMENT
 
@@ -26,7 +28,7 @@ read -p 'Enter the password for the account: ' PASSWORD
 useradd -m -c "${COMMENT}" ${USER_NAME}
 
 # Check to see if the useradd command succeeded.
-if if [[ "${?}" -ne 0 ]]
+if [[ "${?}" -ne 0 ]]
 then
  echo "The user account ${USER_NAME} could not be created."
  exit 1
@@ -45,8 +47,10 @@ fi
 passwd -e ${USER_NAME}
 
 # Display the username, password, and the host where the user was created.
+echo
 echo "The user account ${USER_NAME} has been created successfully on this host ${HOSTNAME}."
 echo "The username is ${USER_NAME}"
 echo "The password is ${PASSWORD}."
 
 exit 0
+

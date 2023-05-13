@@ -26,7 +26,8 @@ read -p 'Enter the password for the account: ' PASSWORD
 useradd -m -c "${COMMENT}" ${USER_NAME}
 
 # Check to see if the useradd command succeeded.
-if ! id ${USER_NAME} >/dev/null 2>&1; then
+if if [[ "${?}" -ne 0 ]]
+then
  echo "The user account ${USER_NAME} could not be created."
  exit 1
 fi
@@ -34,7 +35,8 @@ fi
 #Set the password.
 echo -e "${PASSWORD}\n${PASSWORD}" | passwd ${USER_NAME}
 # Check to see if the passwd command succeeded.
-if ! grep "${USER_NAME}" /etc/shadow >/dev/null 2>&1; then
+if [[ "${?}" -ne 0 ]] 
+then
  echo "The password for the user account ${USER_NAME} could not be set."
  exit 1
 fi
